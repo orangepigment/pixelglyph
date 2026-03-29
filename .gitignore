@@ -5,6 +5,11 @@ build/
 dist/
 wheels/
 *.egg-info
+.pytest_cache/
+.coverage
 
 # Virtual environments
 .venv
+
+# Mac OS
+.DS_Store

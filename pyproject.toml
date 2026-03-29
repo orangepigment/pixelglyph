@@ -1,0 +1,43 @@
+[project]
+name = "pixelglyph"
+version = "0.1.0"
+description = "CLI app for rendering images as ascii art"
+license = "MIT"
+readme = "README.md"
+authors = [
+    { name = "orangepigment", email = "cadmium.orange@yandex.ru" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "pillow>=12.1.1",
+]
+
+[project.scripts]
+pixelglyph = "pixelglyph.main:app"
+
+[build-system]
+requires = ["uv_build>=0.11.2,<0.12.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.2",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.15.8",
+]
+
+[tool.ruff.lint]
+select = [
+    # pycodestyle
+    "E",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+]
