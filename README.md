@@ -41,10 +41,11 @@ options:
 - [x] Write tests
 - [ ] Write advanced tests
 - [ ] Write documentation
-- [ ] Add CI pipeline for buidling and running tests
+- [x] Add CI pipeline for buidling and running tests
 - [x] Add support for extended ANSI colors and RGB
 - [ ] Add support for background coloring
 - [ ] Add multicolor mode
 - [ ] Add support for effects (e.g. blinking)
+- [ ] Add support for loading images from URL
 - [ ] Add a directory with examples
 - [ ] Publish to PyPi
