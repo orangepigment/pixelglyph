@@ -12,6 +12,7 @@ from pixelglyph.coloring import (
 )
 
 # TODO: extract char map handling into a separate file
+# Add support for custom chr maps
 _DEFAULT_CHARS = [
     " ",  # Black
     ".",
@@ -49,9 +50,8 @@ def _process_pixel(px: float | tuple[int, ...] | None, x: int, y: int, invert: b
 
 def print_ascii_image(
     image_filename: str,
-    scale: float,  # TODO: add default scale?
-    width_bound: int | None = None,
-    height_bound: int | None = None,
+    scale: float,
+    size_bound: int,
     invert: bool = False,
     color: str | None = None,
     color_mode: ColorMode = ColorMode.BASIC,
@@ -60,26 +60,38 @@ def print_ascii_image(
     if scale <= 0:
         raise ValueError("scale must be greater than 0")
 
-    if width_bound or 1 <= 0:
-        raise ValueError("width bound must be greater than 0")
-
-    if height_bound or 1 <= 0:
-        raise ValueError("height bound must be greater than 0")
+    if size_bound <= 0:
+        print(f"size_bound: {size_bound}")
+        raise ValueError("size bound must be greater than 0")
 
     # TODO: check file exists
     # TODO: split file reading and image processing into separate functions
     with Image.open(image_filename) as image:
-        image = image.convert("L")  # L stands for grayscale
+        # Set conversion depending on colormode
+        # L stands for grayscale
+        image = image.convert("L")
+
+        # TODO: extract to a function and add test for bounds evaluating
+        if image.height > image.width:
+            height_bound = size_bound or image.height
+            width_bound = ceil(height_bound * (image.width / image.height))
+        else:
+            width_bound = size_bound or image.height
+            height_bound = ceil(width_bound * (image.height / image.width))
 
         scaled_width = _bounded_scale(image.width, scale, width_bound)
         scaled_height = _bounded_scale(image.height, scale, height_bound)
 
         resized = image.resize((scaled_width, scaled_height))
 
-        coloring_enabled = color is not None and sys.stdout.isatty
-        if coloring_enabled:
-            color_code = get_color_escape_code(color, color_mode)
-            print(color_code, end="")
+        match color:
+            # For MultiColor we set colro for each pixel
+            case str() if sys.stdout.isatty:
+                color_code = get_color_escape_code(color, color_mode)
+                print(color_code, end="")
+                coloring_enabled = True
+            case _:
+                coloring_enabled = False
 
         for y in range(resized.height):
             for x in range(resized.width):
