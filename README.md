@@ -16,23 +16,30 @@ pixelglyph -i <path-to-image>
 Help mesage:
 
 ```
-pixelglyph -h
-usage: pixelglyph [-h] -i INPUT [-s SCALE] [-hb HEIGHT_BOUND] [-wb WIDTH_BOUND] [-cm {BASIC,EXTENDED,RGB}] [-c COLOR] [-n]
+usage: pixelglyph [-h] -i INPUT [-s SCALE] [-sb SIZE_BOUND]
+                  [-cm {BASIC,EXTENDED,RGB}] [-c COLOR] [-n]
 
 CLI app for rendering images as ascii art
 
 options:
   -h, --help            show this help message and exit
+  -cm, --color-mode {BASIC,EXTENDED,RGB}
+                        Color mode. Determines color selection and color code
+                        fomat.
+  -c, --color COLOR     Color code. Use color names in BASIC mode (e.g. red or
+                        bright-red), integer values [0;255] in EXTENDED mode
+                        and tuple in RGB mode (e.g. 255,255,255).This option
+                        is ignored in MULTICOLOR mode.
+  -n, --negative        invert pixel values for selecting characters
+
+Resize control:
+  Options for changing image size
+
   -i, --input INPUT     path to the input image
   -s, --scale SCALE     Scaling coefficient
-  -hb, --height-bound HEIGHT_BOUND
-                        Upper bound for image height in pixels
-  -wb, --width-bound WIDTH_BOUND
-                        Upper bound for image width in pixels
-  -cm, --color-mode {BASIC,EXTENDED,RGB}
-                        Color mode. Determines color selection and color code fomat.
-  -c, --color COLOR     Color code. Use color names in BASIC mode (e.g. red or bright-red), integer values [0;255] in EXTENDED mode and tuple in RGB mode (e.g. 255,255,255)
-  -n, --negative        invert pixel values for selecting characters
+  -sb, --size-bound SIZE_BOUND
+                        Upper bound for the larger image size in pixels.Value
+                        will be scaled proportionally for the smaller side.
 ```
 
 ## Roadmap
@@ -41,7 +48,7 @@ options:
 - [x] Write tests
 - [ ] Write advanced tests
 - [ ] Write documentation
-- [x] Add CI pipeline for buidling and running tests
+- [x] Add CI pipeline for building and running tests
 - [x] Add support for extended ANSI colors and RGB
 - [ ] Add support for background coloring
 - [ ] Add multicolor mode

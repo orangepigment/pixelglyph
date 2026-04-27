@@ -8,8 +8,6 @@ class ColorMode(StrEnum):
     RGB = "RGB"
 
 
-_ANSI_FG_WHITE = "\x1b[37m"
-
 _ANSI_FG_COLORS = {
     "black": "\x1b[30m",
     "red": "\x1b[31m",
@@ -18,7 +16,7 @@ _ANSI_FG_COLORS = {
     "blue": "\x1b[34m",
     "magenta": "\x1b[35m",
     "cyan": "\x1b[36m",
-    "white": _ANSI_FG_WHITE,
+    "white": "\x1b[37m",
     "bright-black": "\x1b[90m",
     "bright-red": "\x1b[91m",
     "bright-green": "\x1b[92m",
